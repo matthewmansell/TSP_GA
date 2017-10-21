@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Simple GA for the Travelling Salesman Problem.
  * 
  * @author Matthew Mansell 
- * @version v0.5
+ * @version v0.6
  */
 public class TSP
 {
@@ -25,6 +25,11 @@ public class TSP
     private int bestResult; //Store for best result
     private int[][] childrenTest;
     
+    public TSP() {
+        run("dantzig.tsp");
+    }
+    
+    
     /**
      * Starts the execution of the GA.
      * 
@@ -32,20 +37,23 @@ public class TSP
      */
     public void run(String filename) {
         load(filename); // Load the TSP problem cost matrix
+        // Print GA run info
+        System.out.println("##### TSP GA #####");
+        System.out.println("Matrix File: "+filename);
+        System.out.println("No. Cities: "+SIZE);
+        System.out.println("Max Generation: "+MAX_GENERATION+"\n");
+        
         population = new int[POPULATION_SIZE][SIZE]; // Initialise population now SIZE is set
-        System.out.println("Size: "+SIZE);
         initialise(); // Initialise the population
         evaluate(); // Evaluate the initial population
-        childrenTest= crossover(select(),select());
-        
-        // for(int g = 0; g < MAX_GENERATION; g++) {
-            // int[][] nextGeneration = generatePopulation(); // Create new population
-            // population = nextGeneration; // Copy the new population over
-            // System.out.println("Gen "+g+" | "+generationStats()); // Print stats
-            // evaluate(); // Evaluate the new population
-        // }
+        // Loop for required generations
+        for(int g = 0; g < MAX_GENERATION; g++) {
+            int[][] nextGeneration = generatePopulation(); // Create new population
+            population = nextGeneration; // Copy the new population over
+            evaluate(); // Evaluate the new population
+            System.out.println("Gen "+g+" | "+generationStats()); // Print stats
+        }
         System.out.println("Best Route: "); // Print best result
-        
     }
     
     /**
@@ -153,9 +161,19 @@ public class TSP
     private int[][] generatePopulation() {
         int[][] newPopulation = new int[POPULATION_SIZE][SIZE];
         // Copy current generation best individual (eletism)
+        newPopulation[0] = copy(population[selectBest()]);
         // Generate the rest of the new population
-        for(int i = 0; i < POPULATION_SIZE; i++) {
-            
+        for(int i = 1; i < POPULATION_SIZE; i++) {
+            //Decide to mutate or crossover
+            if(random.nextInt(99) < 94 && i < POPULATION_SIZE-1) {
+                // Generate using crossover
+                int children[][] = crossover(select(),select());
+                newPopulation[i] = children[0];
+                newPopulation[i++] = children[1];
+            } else {
+                // Generate with mutation
+                newPopulation[i] = mutation(select());
+            }
         }
         return newPopulation;
     }
@@ -224,8 +242,8 @@ public class TSP
     }
     
     /**
-     * 
-     * 
+     * Returns a metated child of the given parent using exchange mutation.
+     * @return The mutated child.
      */
     private int[] mutation(int parent) {
         return new int[0];
