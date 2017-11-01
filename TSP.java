@@ -16,7 +16,7 @@ public class TSP
     private int SIZE; // The number of cities of the TSP instance.
     private int[][] COST; // TSP cost matrix
     private static final int POPULATION_SIZE = 100; // The population size
-    private static final int MAX_GENERATION = 4999; // The number of generations
+    private static final int MAX_GENERATION = 19999; // The number of generations
     private static final int TOURNAMENT_SIZE = 5; // The tournament size
     private static final int MUTATION_CHANCE = 5; // Mutation percentage change
     
@@ -27,7 +27,7 @@ public class TSP
     private int[][] childrenTest;
     
     public TSP() {
-        while(fitness[selectBest()] > 700 || fitness[selectBest()] == 0) {
+        while(fitness[selectBest()] >= 700 || fitness[selectBest()] == 0) {
             run();
         }
     }
@@ -47,7 +47,7 @@ public class TSP
         //System.out.println("Max Generation: "+MAX_GENERATION+"\n");
         
         population = new int[POPULATION_SIZE][SIZE]; // Initialise population now SIZE is set
-        initialise(); // Initialise the population
+        initialise(0); // Initialise the population
         evaluate(); // Evaluate the initial population
         // Loop for required generations
         for(int g = 0; g <= MAX_GENERATION; g++) {
@@ -159,6 +159,28 @@ public class TSP
     }
     
     /**
+     * Initialises the population with a fixed start
+     */
+    private void initialise(int startCity) {
+        ArrayList<Integer> compList = new ArrayList<Integer>();
+        for(int i = 0; i < SIZE; i++) {
+            if(i != startCity) {
+                compList.add(i);
+            }
+        }
+        
+        for(int i = 0; i < POPULATION_SIZE; i++) {
+            ArrayList<Integer> cities = new ArrayList(compList);
+            population[i][0] = startCity;
+            for(int i2 = 1; i2 < SIZE-1; i2++) {
+                int place = random.nextInt(cities.size()-1);
+                population[i][i2] = cities.get(place);
+                cities.remove(place);
+            }
+        }
+    }
+    
+    /**
      * Generates a new population from the current.
      * @return The generated population.
      */
@@ -166,7 +188,6 @@ public class TSP
         int[][] newPopulation = new int[POPULATION_SIZE][SIZE];
         // Copy current generation best individual (eletism)
         newPopulation[0] = copy(population[selectBest()]);
-        int produced = 0;
         // Generate the rest of the new population
         for(int i = 1; i < POPULATION_SIZE; i++) {
             //Decide to mutate or crossover
@@ -201,6 +222,35 @@ public class TSP
         return best;
     }
     
+    private int rouletteSelect() {
+        double[] roulette = new double[POPULATION_SIZE];
+        double total = 0;
+        
+        for(int i = 0; i < POPULATION_SIZE; i++) {
+            total += fitness[i];
+        }
+        
+        double cumulative = 0.0;
+        
+        for(int i = 0; i < POPULATION_SIZE; i++) {
+            roulette[i] = cumulative + (fitness[i] / total);
+            cumulative = roulette[i];
+        }
+        
+        roulette[POPULATION_SIZE-1] = 1.0;
+        int parent = -1;
+        double probability = random.nextDouble();
+        
+        for(int i = 0; i < POPULATION_SIZE; i++) {
+            if(probability >= roulette[i]) {
+                parent = i;
+                break;
+            }
+        }
+        
+        return 0;
+    }
+    
     /**
      * Calculates the fitness for each individual.
      */
@@ -219,6 +269,7 @@ public class TSP
     
     private int[][] partiallyMappedCrossover(int parent1, int parent2) {
         int[][] children = new int[2][SIZE];
+        int p1 = random.nextInt(SIZE-2), p2 = 0;
         children[0] = copy(population[parent1]);
         children[1] = copy(population[parent2]);
         return children;
