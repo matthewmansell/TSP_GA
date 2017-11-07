@@ -199,10 +199,9 @@ public class TSP_GA
             throw new RuntimeException("Could not load file: " + filename, e);
         }
         // Print GA run info
-        System.out.println("##### TSP GA #####");
+        System.out.println("##### TSP #####");
         System.out.println("Matrix File: "+filename);
         System.out.println("No. Cities: "+SIZE);
-        System.out.println("Max Generation: "+GENERATIONS+"\n");
     }
     
     /**
