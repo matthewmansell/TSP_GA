@@ -27,9 +27,9 @@ public class TSP
     private int[][] childrenTest;
     
     public TSP() {
-        while(fitness[selectBest()] >= 700 || fitness[selectBest()] == 0) {
-            run();
-        }
+        // while(fitness[selectBest()] >= 700 || fitness[selectBest()] == 0) {
+            // run();
+        // }
     }
     
     /**
@@ -47,14 +47,14 @@ public class TSP
         //System.out.println("Max Generation: "+MAX_GENERATION+"\n");
         
         population = new int[POPULATION_SIZE][SIZE]; // Initialise population now SIZE is set
-        initialise(0); // Initialise the population
+        initialise(); // Initialise the population
         evaluate(); // Evaluate the initial population
         // Loop for required generations
         for(int g = 0; g <= MAX_GENERATION; g++) {
             int[][] nextGeneration = generatePopulation(); // Create new population
             population = nextGeneration; // Copy the new population over
             evaluate(); // Evaluate the new population
-            //System.out.println("Gen "+g+" | "+generationStats()); // Print stats
+            System.out.println("Gen "+g+" | "+generationStats()); // Print stats
         }
         System.out.println("Best Route: "+fitness[selectBest()]); // Print best result
         System.out.println(printRoute(population[selectBest()]));
@@ -159,28 +159,6 @@ public class TSP
     }
     
     /**
-     * Initialises the population with a fixed start
-     */
-    private void initialise(int startCity) {
-        ArrayList<Integer> compList = new ArrayList<Integer>();
-        for(int i = 0; i < SIZE; i++) {
-            if(i != startCity) {
-                compList.add(i);
-            }
-        }
-        
-        for(int i = 0; i < POPULATION_SIZE; i++) {
-            ArrayList<Integer> cities = new ArrayList(compList);
-            population[i][0] = startCity;
-            for(int i2 = 1; i2 < SIZE-1; i2++) {
-                int place = random.nextInt(cities.size()-1);
-                population[i][i2] = cities.get(place);
-                cities.remove(place);
-            }
-        }
-    }
-    
-    /**
      * Generates a new population from the current.
      * @return The generated population.
      */
@@ -193,12 +171,12 @@ public class TSP
             //Decide to mutate or crossover
             if(random.nextInt(99) > MUTATION_CHANCE-1 && i < POPULATION_SIZE-1) {
                 // Generate using crossover
-                int children[][] = cycleCrossover(tournamentSelect(),tournamentSelect());
+                int children[][] = cycleCrossover(rouletteSelect(),rouletteSelect());
                 newPopulation[i] = children[0];
                 newPopulation[++i] = children[1];
             } else {
                 // Generate with mutation
-                newPopulation[i] = inversionMutation(tournamentSelect());
+                newPopulation[i] = inversionMutation(rouletteSelect());
             }
         }
         return newPopulation;
@@ -263,7 +241,8 @@ public class TSP
             }
             // Add cost of the returning back to the start position
             fitness += COST[population[i][SIZE-1]][population[i][0]];
-            this.fitness[i] = fitness; // Se the firness value
+            this.fitness[i] = fitness; // See the fitness value
+            
         }
     }
     

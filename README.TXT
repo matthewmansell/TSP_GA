@@ -1,6 +1,18 @@
 PROJECT TITLE: GA for the Travelling Salesman Problem
 PURPOSE OF PROJECT: CO656 Assignment 1
-DATE: 19/10/2016
+DATE: 06/11/2017
 
-This is the skeleton for CO656 Assignment 1. It loads a symmetric traveling salesman problem file
-from the TSPLIB. Currently it only support files with explicit distances.
+Optimum/best routes found:
+ - groetschel.tsp (1272):
+1:12:4:23:9:13:14:20:2:15:19:22:18:17:10:5:21:8:24:6:7:3:11:16:1
+1:16:11:3:7:6:24:8:21:5:10:17:18:22:19:15:2:20:14:13:9:23:4:12:1
+
+ - dantzig.tsp (699):
+ 1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:37:38:39:40:41:42:1
+ 1:42:41:40:39:38:37:36:35:34:33:32:31:30:29:28:27:26:25:24:23:22:21:20:19:18:17:16:15:14:13:12:11:10:9:8:7:6:5:4:3:2:1
+
+ 
+
+ 
+ 
+ 
