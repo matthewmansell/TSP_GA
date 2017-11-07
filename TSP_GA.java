@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author Matthew Mansell 
  * @version v2.0
  */
-public class TSP_FixedStart
+public class TSP_GA
 {
     // ########## CONSTANTS ##########
     private static final int TOURNAMENT_SELECT = 0;
@@ -57,7 +57,7 @@ public class TSP_FixedStart
     /**
      * @param tsbFile An initial tsb file to be loaded.
      */
-    public TSP_FixedStart(String tsbFile) {
+    public TSP_GA(String tsbFile) {
         load(tsbFile);
     }
     

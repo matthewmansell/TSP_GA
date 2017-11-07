@@ -1,8 +1,8 @@
 #BlueJ class context
-comment0.target=TSP_FixedStart
+comment0.target=TSP_GA
 comment0.text=\n\ Simple\ GA\ for\ the\ Travelling\ Salesman\ Problem.\n\ View\ the\ optimum/best\ results\ for\ each\ tsp\ in\ the\ README.\n\ View\ the\ notes\ on\ optimal\ configuration\ in\ the\ word\ file.\n\ \n\ Assignment\ task\ completion\:\n\ Task\ 1\:\n\ \ -\ Initialisation\ of\ individuals\:\ see\ initialise().\n\ \ -\ Fitness\ function\:\ see\ evaluate().\n\ \ -\ Mutation\ operator\:\ see\ inversionMutation().\n\ \ -\ Crossover\ operator\:\ see\ cycleCrossover().\n\ \ -\ Selection\ method\:\ see\ tournamentSelect().\n\ \ -\ Evolutionary\ loop\:\ see\ run()\ and\ generatePopulation().\n\ \ -\ Fixed\ city\ start\:\ see\ initialise()\ and\ all\ other\ methods\ prevented\ from\ \n\ \ \ \ altering\ index\ 0.\n\ \ Task\ 2\:\n\ \ -\ Alternate\ mutation\ operator\:\ see\ exchangeMutation().\n\ \ -\ Alternative\ crossover\ operator\:\ see\ partiallyMappedCrossover().\n\ \ -\ Alternative\ selection\ method\:\ see\ rouletteSelect();\n\ \ Task\ 3\:\ see\ included\ word\ document.\n\ \n\ @author\ Matthew\ Mansell\ \n\ @version\ v2.0\n
 comment1.params=tsbFile
-comment1.target=TSP_FixedStart(java.lang.String)
+comment1.target=TSP_GA(java.lang.String)
 comment1.text=\n\ @param\ tsbFile\ An\ initial\ tsb\ file\ to\ be\ loaded.\n
 comment10.params=
 comment10.target=void\ evaluate()
